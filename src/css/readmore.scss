@@ -1,0 +1,10 @@
+[data-readmore]{
+  transition:height .3s ease-out;
+  overflow:hidden;
+}
+[data-readmore-rest="0"]{
+  display:none !important;
+}
+[data-readmore-dots="0"]{
+  display:none !important;
+}

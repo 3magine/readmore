@@ -1,5 +1,5 @@
 [data-readmore]{
-  transition:height .3s ease-out;
+  transition:height .4s cubic-bezier(0.23, 1, 0.32, 1);
   overflow:hidden;
 }
 [data-readmore-rest="0"]{

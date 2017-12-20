@@ -1,1 +1,1 @@
-[data-readmore]{transition:height .3s ease-out;overflow:hidden}[data-readmore-dots="0"],[data-readmore-rest="0"]{display:none!important}
+[data-readmore]{transition:height .4s cubic-bezier(.23,1,.32,1);overflow:hidden}[data-readmore-dots="0"],[data-readmore-rest="0"]{display:none!important}

@@ -25,7 +25,7 @@ gulp.task('javascript_app', function(){
 	        presets: ['es2015']
 	    }))
 	    .pipe(concat('readmore.js'))
-      //.pipe(uglify())
+      .pipe(uglify())
       .pipe(gulp.dest('./dist/js'));
 });
 

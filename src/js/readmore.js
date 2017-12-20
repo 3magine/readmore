@@ -6,6 +6,7 @@
       ho, hc,
       ln,
       sd, sr,
+      dur, fun,
       aE = (a,b,c) => {try{a.addEventListener(b,c,!1)}catch(d){a.attachEvent('on'+b,c)}},
       tE = (c,d,b,a) => {b=document;b.createEvent?(a=new Event(d),c.dispatchEvent(a)):(a=b.createEventObject(),c.fireEvent("on"+d,a))};
   ;
@@ -14,8 +15,10 @@
 
   for(x=0;x<e.length;x++){
     d = e[x].dataset.readmoreDots || '...';
-    mt = e[x].dataset.readmoreMore || 'Read more';
-    lt = e[x].dataset.readmoreLess || 'Read less';
+    mt = e[x].dataset.readmoreMore || 'read more';
+    lt = e[x].dataset.readmoreLess || 'read less';
+    dur = parseInt(e[x].dataset.readmoreDuration || 400);
+    fun = e[x].dataset.readmoreEasing || 'ease-out';
 
     //set readmore link
     ln = document.createElement('a');
@@ -28,33 +31,39 @@
           h = p.dataset.readmoreHeight,
           d = p.querySelector('[data-readmore-dots]'),
           r = p.querySelector('[data-readmore-rest]'),
-          l = p.querySelector('[data-readmore-link]');
+          l = p.querySelector('[data-readmore-link]'),
+          dur = parseInt(p.dataset.readmoreDuration),
+          tm;
 
       e.preventDefault();
-
-      //swap link text
-      l.dataset.readmoreLink = l.textContent;
-      l.textContent = t;
-
-      //toggle dots
-      sd.dataset.readmoreDots = parseInt(sd.dataset.readmoreDots) ? 0 : 1;
-      
-      //toggle rest
-      sr.dataset.readmoreRest = parseInt(sr.dataset.readmoreRest) ? 0 : 1;
 
       //toggle heights
       p.dataset.readmoreHeight = p.style.height;
       p.style.height = h;
-      
+      tm = setTimeout(()=>{
+        //swap link text
+        l.dataset.readmoreLink = l.textContent;
+        l.textContent = t;
+
+        //toggle dots
+        sd.dataset.readmoreDots = parseInt(sd.dataset.readmoreDots) ? 0 : 1;
+        
+        //toggle rest
+        sr.dataset.readmoreRest = parseInt(sr.dataset.readmoreRest) ? 0 : 1;
+      },parseInt(sd.dataset.readmoreDots) ? 0 : dur - (dur * .5));
+
     });
 
     l = parseInt(e[x].dataset.readmore);
     t = e[x].textContent;
 
     //don't break words
-    while(/\s/.test(t.substr(l-1,1)) === false) ++l;
-    --l; //dont include space
-    e[x].dataset.readmore = l; //update
+    while(/\s/.test(t.substr(l-1,1)) === false && ++l);
+
+    e[x].dataset.readmore = l; //update length without breaking words
+    e[x].style.transitionDuration = `${(dur/1000)}s`;
+    e[x].style.transitionTimingFunction = fun;
+    e[x].dataset.readmoreDuration = dur; //make sure it exists when clicked
 
     if(t.length > l){
       //append link

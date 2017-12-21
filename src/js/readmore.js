@@ -58,7 +58,7 @@
     t = e[x].textContent;
 
     //don't break words
-    while(/\s/.test(t.substr(l-1,1)) === false && l<t.length && ++l);
+    while(/\s/.test(t.substr(l-1,1)) === false && l<t.length && ++l); --l;
 
     e[x].dataset.readmore = l; //update length without breaking words
     e[x].style.transitionDuration = `${(dur/1000)}s`;

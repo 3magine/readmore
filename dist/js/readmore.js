@@ -1,1 +1,135 @@
-"use strict";!function(){var e,t,a,r,d,o,s,n,m,i,l,u,c,h,p,g=document.body.querySelectorAll("[data-readmore]"),f=function(e,t,a){try{e.addEventListener(t,a,!1)}catch(r){e.attachEvent("on"+t,a)}};if(0!=g.length)for(e=0;e<g.length;e++){for(o=g[e].dataset.readmoreDots||"...",s=g[e].dataset.readmoreMore||"read more",n=g[e].dataset.readmoreLess||"read less",h=parseInt(g[e].dataset.readmoreDuration||400),p=g[e].dataset.readmoreEasing||"ease-out",(l=document.createElement("a")).textContent=n,l.dataset.readmoreLink=s,l.href="#",f(l,"click",function(e){var t=l.dataset.readmoreLink,a=l.parentNode,r=a.dataset.readmoreHeight,d=(a.querySelector("[data-readmore-dots]"),a.querySelector("[data-readmore-rest]"),a.querySelector("[data-readmore-link]")),o=parseInt(a.dataset.readmoreDuration);e.preventDefault(),a.dataset.readmoreHeight=a.style.height,a.style.height=r,setTimeout(function(){d.dataset.readmoreLink=d.textContent,d.textContent=t,u.dataset.readmoreDots=parseInt(u.dataset.readmoreDots)?0:1,c.dataset.readmoreRest=parseInt(c.dataset.readmoreRest)?0:1},parseInt(u.dataset.readmoreDots)?0:o-.5*o)}),t=parseInt(g[e].dataset.readmore),a=g[e].textContent;!1===/\s/.test(a.substr(t-1,1))&&t<a.length&&++t;);--t,g[e].dataset.readmore=t,g[e].style.transitionDuration=h/1e3+"s",g[e].style.transitionTimingFunction=p,g[e].dataset.readmoreDuration=h,a.length>t&&(r=a.substr(0,t),d=a.substr(t),g[e].textContent=r,(u=document.createElement("span")).dataset.readmoreDots=0,u.textContent=o+" ",g[e].appendChild(u),(c=document.createElement("span")).dataset.readmoreRest=1,c.textContent=d+" ",g[e].appendChild(c),g[e].appendChild(l),m=g[e].offsetHeight,u.dataset.readmoreDots=1,c.dataset.readmoreRest=0,l.textContent=s,l.dataset.readmoreLink=n,i=g[e].offsetHeight,g[e].style.height=i+"px",g[e].dataset.readmoreHeight=m+"px")}}();
+'use strict';
+
+(function () {
+  var e = document.body.querySelectorAll('[data-readmore]'),
+      x,
+      l,
+      t,
+      tb,
+      te,
+      d,
+      mt,
+      lt,
+      ho,
+      hc,
+      ln,
+      sd,
+      sr,
+      dur,
+      fun,
+      tm,
+      aE = function aE(a, b, c) {
+    try {
+      a.addEventListener(b, c, !1);
+    } catch (d) {
+      a.attachEvent('on' + b, c);
+    }
+  },
+      tE = function tE(c, d, b, a) {
+    b = document;b.createEvent ? (a = new Event(d), c.dispatchEvent(a)) : (a = b.createEventObject(), c.fireEvent("on" + d, a));
+  };
+  ;
+
+  if (e.length == 0) return;
+
+  for (x = 0; x < e.length; x++) {
+    d = e[x].dataset.readmoreDots || '...';
+    mt = e[x].dataset.readmoreMore || 'read more';
+    lt = e[x].dataset.readmoreLess || 'read less';
+    dur = parseInt(e[x].dataset.readmoreDuration || 400);
+    fun = e[x].dataset.readmoreEasing || 'ease-out';
+
+    //set readmore link
+    ln = document.createElement('a');
+    ln.textContent = lt;
+    ln.dataset.readmoreLink = mt;
+    ln.href = '#';
+    aE(ln, 'click', function (e) {
+      var t = ln.dataset.readmoreLink,
+          p = ln.parentNode,
+          h = p.dataset.readmoreHeight,
+          d = p.querySelector('[data-readmore-dots]'),
+          r = p.querySelector('[data-readmore-rest]'),
+          l = p.querySelector('[data-readmore-link]'),
+          dur = parseInt(p.dataset.readmoreDuration),
+          tm,
+          hc;
+
+      e.preventDefault();
+      //e[x].style.height = 
+
+
+      //toggle heights
+      p.dataset.readmoreHeight = p.style.height;
+      p.style.height = h;
+      tm = setTimeout(function () {
+        //swap link text
+        l.dataset.readmoreLink = l.textContent;
+        l.textContent = t;
+
+        //toggle dots
+        sd.dataset.readmoreDots = parseInt(sd.dataset.readmoreDots) ? 0 : 1;
+
+        //toggle rest
+        sr.dataset.readmoreRest = parseInt(sr.dataset.readmoreRest) ? 0 : 1;
+      }, parseInt(sd.dataset.readmoreDots) ? 0 : dur - dur * .5);
+    });
+
+    l = parseInt(e[x].dataset.readmore);
+    t = e[x].textContent;
+
+    //don't break words
+    while (/\s/.test(t.substr(l - 1, 1)) === false && l < t.length && ++l) {}--l;
+
+    e[x].dataset.readmore = l; //update length without breaking words
+    e[x].style.transitionDuration = dur / 1000 + 's';
+    e[x].style.transitionTimingFunction = fun;
+    e[x].dataset.readmoreDuration = dur; //make sure it exists when clicked
+
+    if (t.length > l) {
+      //append link
+      tb = t.substr(0, l);
+      te = t.substr(l);
+
+      //set initial content
+      e[x].textContent = tb;
+
+      //append dots
+      sd = document.createElement('span');
+      sd.dataset.readmoreDots = 0; //hidden when expanded
+      sd.textContent = d + ' '; //include space at the end
+      e[x].appendChild(sd);
+
+      //append rest of content
+      sr = document.createElement('span');
+      sr.dataset.readmoreRest = 1; //visible when expanded
+      sr.textContent = te + ' '; //include space at the end
+      e[x].appendChild(sr);
+
+      //append readmore link
+      e[x].appendChild(ln);
+
+      //calculate expanded height
+      ho = e[x].offsetHeight;
+
+      //show dots
+      sd.dataset.readmoreDots = 1;
+
+      //hide rest
+      sr.dataset.readmoreRest = 0;
+
+      //swap link text
+      ln.textContent = mt;
+      ln.dataset.readmoreLink = lt;
+
+      //set/store heights for animations
+      e[x].dataset.readmoreHeight = ho + 'px';
+
+      tm = setTimeout(function (p) {
+        //now calculate collapsed height
+        var hc = p.offsetHeight;
+        p.style.height = hc + 'px';
+      }.bind(undefined, e[x]), dur);
+    }
+  }
+})();

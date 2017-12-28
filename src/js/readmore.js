@@ -7,6 +7,7 @@
       ln,
       sd, sr,
       dur, fun,
+      tm,
       aE = (a,b,c) => {try{a.addEventListener(b,c,!1)}catch(d){a.attachEvent('on'+b,c)}},
       tE = (c,d,b,a) => {b=document;b.createEvent?(a=new Event(d),c.dispatchEvent(a)):(a=b.createEventObject(),c.fireEvent("on"+d,a))};
   ;
@@ -33,10 +34,13 @@
           r = p.querySelector('[data-readmore-rest]'),
           l = p.querySelector('[data-readmore-link]'),
           dur = parseInt(p.dataset.readmoreDuration),
-          tm;
+          tm,
+          hc;
 
       e.preventDefault();
+      //e[x].style.height = 
 
+      
       //toggle heights
       p.dataset.readmoreHeight = p.style.height;
       p.style.height = h;
@@ -101,12 +105,14 @@
       ln.textContent = mt;
       ln.dataset.readmoreLink = lt;
 
-      //now calculate collapsed height
-      hc = e[x].offsetHeight;
-
       //set/store heights for animations
-      e[x].style.height = `${hc}px`;
       e[x].dataset.readmoreHeight = `${ho}px`;
+
+      tm = setTimeout((function(p){
+        //now calculate collapsed height
+        var hc = p.offsetHeight;
+        p.style.height = `${hc}px`;
+      }).bind(this,e[x]),dur);
     }
   }
 
